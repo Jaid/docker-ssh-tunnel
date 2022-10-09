@@ -1,0 +1,15 @@
+Host tunnel
+  Port 22
+  BatchMode yes
+  StrictHostKeyChecking no
+  AddKeysToAgent yes
+  ForwardAgent yes
+  ExitOnForwardFailure yes
+  Compression yes
+  CompressionLevel 4
+  ConnectionAttempts 10
+  ConnectTimeout 60
+  IdentitiesOnly yes
+  PreferredAuthentications publickey
+  PasswordAuthentication no
+  Protocol 2

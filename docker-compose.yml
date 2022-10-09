@@ -3,7 +3,8 @@ services:
 
   main:
     container_name: sshTunnel-dev
-    network_mode: none
+    restart: unless-stopped
+    network_mode: host
     build:
       context: src
     environment:
