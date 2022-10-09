@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+
+  main:
+    container_name: sshTunnel-dev
+    network_mode: none
+    build:
+      context: src
+    environment:
+      remoteHost: ${vpsHost:?}
+      remoteUser: ${vpsUser:?}
+      httpLocal: 80
+      httpRemote: 10080
+      qbitLocal: 3069
+      qbitRemote: 13069
+    volumes:
+      - type: bind
+        source: ${vpsIdentity:?}
+        target: /app/identity

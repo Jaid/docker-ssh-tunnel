@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -o errexit
+
+here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-}")" &>/dev/null && pwd 2>/dev/null)"
+
+distFolder="$here/../dist"
+mkdir --parents "$distFolder"
+bash "$here/dive" --json "$distFolder/dive.json" "$@"

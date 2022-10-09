@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -o errexit
+
+here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-}")" &>/dev/null && pwd 2>/dev/null)"
+
+projectFolder=$(realpath "$here/..")
+projectName=$(basename "$projectFolder")
+imageName=${projectName##docker-}-dev
+
+printf %s "$imageName"

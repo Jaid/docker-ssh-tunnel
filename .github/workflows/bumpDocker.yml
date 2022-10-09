@@ -1,0 +1,20 @@
+name: bumpDocker
+on:
+  workflow_dispatch:
+    inputs:
+      bumpAmount:
+        description: Bump amount
+        required: true
+        default: patch
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+jobs:
+  job:
+    uses: jaid/workflows/.github/workflows/bumpDocker.yml@main
+    with:
+      bumpAmount: ${{ inputs.bumpAmount }}
+    secrets:
+      dockerHubToken: ${{ secrets.dockerHubToken }}
