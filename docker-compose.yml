@@ -11,9 +11,9 @@ services:
       remoteHost: ${vpsHost:?}
       remoteUser: ${vpsUser:?}
       httpLocal: 80
-      httpRemote: 10080
+      httpRemote: 20080
       qbitLocal: 3069
-      qbitRemote: 13069
+      qbitRemote: 23069
     volumes:
       - type: bind
         source: ${vpsIdentity:?}
