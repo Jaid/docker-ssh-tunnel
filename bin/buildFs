@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
-set -o errexit
+set -o errexit -o pipefail
 
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-}")" &>/dev/null && pwd 2>/dev/null)"
 
 outputFolder=$(realpath "$here/../dist/fs")
-
 if [[ -d $outputFolder ]]; then
   rm -rf "$outputFolder"
 fi
-
-bash "$here/build" --output "$outputFolder"
+bash "$here/build" --output "$outputFolder" "$@"
 size=$(du --bytes --summarize "$outputFolder" | cut --fields 1 | numfmt --to=si --suffix=b)
 printf 'Filesystem size: %s\n' "$size"

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-set -o errexit
+set -o errexit -o pipefail
 
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-}")" &>/dev/null && pwd 2>/dev/null)"
 
-docker compose --file "$here/../docker-compose.yml" up --build "$@"
+distFolder="$here/../dist"
+mkdir --parents "$distFolder"
+docker compose --file "$here/../docker-compose.yml" up --build --no-start |& tee "$distFolder/build.log"
+docker compose --file "$here/../docker-compose.yml" up --exit-code-from main --timeout 180 "$@" |& tee "$distFolder/run.log"

@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
-set -o errexit
+set -o errexit -o pipefail
 
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-}")" &>/dev/null && pwd 2>/dev/null)"
 
 divePath=${divePath:-$(command -v dive || true)}
-
 if [[ -z $divePath ]]; then
   printf >&2 'Variable $divePath not set\n'
   exit 1
 fi
-
-bash "$here/build"
-
+bash "$here/build" "$@"
 imageName="$("$here/imageName")"
-$divePath "$@" "$imageName"
+$divePath "$imageName"

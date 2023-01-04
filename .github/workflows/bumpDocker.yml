@@ -8,9 +8,9 @@ on:
         default: patch
         type: choice
         options:
-        - patch
-        - minor
-        - major
+          - patch
+          - minor
+          - major
 jobs:
   job:
     uses: jaid/workflows/.github/workflows/bumpDocker.yml@main
