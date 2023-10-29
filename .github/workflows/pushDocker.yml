@@ -19,6 +19,9 @@ jobs:
     with:
       dockerHubUser: jaidchen
       matrixPlatform: linux/amd64 linux/arm64/v8
+      matrixAdditionEvals: |-
+        builderImage: `jaidchen/builder:6.0.0${platform === "linux/arm64/v8" ? "-arm8" : ""}`
+        runnerImage: `jaidchen/runner:5.0.0${platform === "linux/arm64/v8" ? "-arm8" : ""}`
       testAppArgs: bash -c 'ls ~/.ssh'
       testEval: status === 0 && stdout.length > 0
       versionTag: ${{ github.event.client_payload.newTag }}
