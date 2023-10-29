@@ -4,7 +4,7 @@ set -o errexit -o pipefail
 if [[ -n $debug ]]; then
   ports --mine
 fi
-pid=$(pgrep --uid "$userId" ^ssh)
+pid=$(pgrep --uid "${userId?}" ^ssh)
 if [[ -n $debug ]]; then
   printf 'pid = %s\n' "$pid"
 fi
