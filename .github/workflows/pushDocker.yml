@@ -5,8 +5,22 @@ on:
       - main
   schedule:
     - cron: 45 23 * * 0 # https://crontab.guru/#45_23_*_*_0
+  repository_dispatch:
+    types: [bumped]
 jobs:
+  debug:
+    uses: jaid/workflows/.github/workflows/debug.yml@main
   job:
+    name: ${{ github.workflow }}
     uses: jaid/workflows/.github/workflows/pushDocker.yml@main
+    permissions:
+      contents: read
+      packages: write
+    with:
+      dockerHubUser: jaidchen
+      matrixPlatform: linux/amd64 linux/arm64/v8
+      testAppArgs: bash -c 'ls ~/.ssh'
+      testEval: status === 0 && stdout.length > 0
+      versionTag: ${{ github.event.client_payload.newTag }}
     secrets:
       dockerHubToken: ${{ secrets.dockerHubToken }}

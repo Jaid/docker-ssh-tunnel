@@ -1,4 +1,4 @@
-name: bumpDocker
+name: bump
 on:
   workflow_dispatch:
     inputs:
@@ -12,9 +12,12 @@ on:
           - minor
           - major
 jobs:
+  debug:
+    uses: jaid/workflows/.github/workflows/debug.yml@main
   job:
-    uses: jaid/workflows/.github/workflows/bumpDocker.yml@main
+    name: ${{ github.workflow }}
+    permissions:
+      contents: write
+    uses: jaid/workflows/.github/workflows/bump.yml@main
     with:
       bumpAmount: ${{ inputs.bumpAmount }}
-    secrets:
-      dockerHubToken: ${{ secrets.dockerHubToken }}

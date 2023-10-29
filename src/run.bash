@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -o errexit -o pipefail
 
 function makeConfig {
   # shellcheck disable=2154
@@ -8,7 +9,6 @@ function makeConfig {
   printf '  IdentityFile %s\n' "$HOME/identity"
   printf '  UserKnownHostsFile %s\n' "$HOME/known_hosts"
   declare -a envNames=()
-  # shellcheck disable=SC2312
   env >.env
   while read -r line; do
     variableName=$(cut --delimiter "=" --fields 1 <<<"$line")
@@ -30,5 +30,13 @@ function makeConfig {
 }
 
 makeConfig >>ssh_config
-cat ssh_config
-ssh -T -N -n -x -v -F ssh_config tunnel
+if [[ -n $debug ]]; then
+  cat ssh_config
+fi
+# -T = Disable pseudo-tty allocation.
+# -N = Do not execute a remote command. This is useful for just forwarding ports.
+# -n = Redirects stdin from /dev/null (actually, prevents reading from stdin). This must be used when ssh is run in the background.
+# -x = Disables X11 forwarding.
+# -v = Verbose mode. Causes ssh to print debugging messages about its progress. This is helpful in debugging connection, authentication, and configuration problems.
+# -F = Specifies the path to an alternative per-user configuration file. If a configuration file is given on the command line, the system-wide configuration file (/etc/ssh/ssh_config) will be ignored.
+ssh -- -T -N -n -x -v -F ssh_config tunnel

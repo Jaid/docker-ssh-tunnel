@@ -3,6 +3,7 @@ Thumbs.db
 Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
+*.stackdump
 
 # Mac, based on https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
 .DS_Store
@@ -35,6 +36,9 @@ Temporary Items
 .env
 
 # Generated or temporary content
-dist
-temp
-*.stackdump
+/out/
+/dist/
+/temp/
+/private/
+/srcCompiled/
+/srcCompiled-*/
