@@ -1,8 +1,11 @@
 # syntax=docker/dockerfile:1
 
-FROM jaidchen/builder:6.0.0 AS build
+ARG builderImage
+ARG runnerImage
 
-FROM jaidchen/runner:5.0.0
+FROM $builderImage AS build
+
+FROM $runnerImage
 
 COPY --from=build /usr/bin/ports /usr/bin/ports
 ADD --chown=$userId:$groupId content .
