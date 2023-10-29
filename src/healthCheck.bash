@@ -1,5 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -o errexit -o pipefail
 
+ports --mine
 pid=$(pgrep --uid "$userId" ^ssh)
 ramUsed=$(ps --pid "$pid" -o vsz h)
 if [[ $ramUsed -lt 100 ]]; then
