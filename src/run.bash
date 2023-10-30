@@ -32,8 +32,8 @@ function makeConfig {
           host=$(cut --delimiter ":" --fields 1 <<<"$port")
           port=$(cut --delimiter ":" --fields 2- <<<"$port")
         fi
-        printf '  #         %s:%s → %s:%s\n' "$remoteHost" "${!remoteVariableName}" "$host" "$variableValue"
-        printf '  RemoteForward %s %s:%s\n' "${!remoteVariableName}" "$host" "$variableValue"
+        printf '  #         %s:%s → %s:%s\n' "$remoteHost" "${!remoteVariableName}" "$host" "$port"
+        printf '  RemoteForward %s %s:%s\n' "${!remoteVariableName}" "$host" "$port"
       fi
     fi
   done <.env
