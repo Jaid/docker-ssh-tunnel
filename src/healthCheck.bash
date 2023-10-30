@@ -1,8 +1,12 @@
 #!/bin/bash
 set -o errexit -o pipefail
 
+if [[ -n $xtrace && $xtrace != 0 && $xtrace != false ]]; then
+  set -o xtrace
+fi
+
 if [[ -n $debug && $debug != 0 && $debug != false ]]; then
-  ports --mine
+  /usr/bin/ports --mine
 fi
 pid=$(pgrep --uid "${userId?}" ^ssh)
 if [[ -n $debug && $debug != 0 && $debug != false ]]; then

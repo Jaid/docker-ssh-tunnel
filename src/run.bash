@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -o errexit -o pipefail
 
+if [[ -n $xtrace && $xtrace != 0 && $xtrace != false ]]; then
+  set -o xtrace
+fi
+
 function makeConfig {
   # shellcheck disable=2154
   printf '  HostName %s\n' "$remoteHost"
