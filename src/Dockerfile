@@ -9,7 +9,7 @@ FROM $runnerImage
 
 COPY --from=build /usr/bin/ports /usr/bin/ports
 ADD --chown=$userId:$groupId content .
-ENV debug=
+ENV debug ''
 # -T = Disable pseudo-tty allocation.
 # -N = Do not execute a remote command. This is useful for just forwarding ports.
 # -n = Redirects stdin from /dev/null (actually, prevents reading from stdin). This must be used when ssh is run in the background.
