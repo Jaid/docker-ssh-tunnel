@@ -30,7 +30,11 @@ function makeConfig {
 }
 
 makeConfig >>ssh_config
-if [[ -n $debug ]]; then
+if [[ -n $debug && $debug != 0 && $debug != false ]]; then
   cat ssh_config
+fi
+if [[ -n $managePermissions && $managePermissions != 0 && $managePermissions != false ]]; then
+  chmod 600 ssh_config
+  chmod 600 "$HOME/identity"
 fi
 ${sshCommand?}
