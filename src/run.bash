@@ -5,8 +5,12 @@ function makeConfig {
   # shellcheck disable=2154
   printf '  HostName %s\n' "$remoteHost"
   # shellcheck disable=2154
-  printf '  User %s\n' "$remoteUser"
-  printf '  IdentityFile %s\n' "$HOME/identity"
+  identityFile=$HOME/identity
+  if [[ -d $identityFile ]]; then
+    identityFile=$(find "$identityFile" -type f -print)
+  fi
+  printf '  User %s\n' "${remoteUser?}"
+  printf '  IdentityFile %s\n' "$identityFile"
   printf '  UserKnownHostsFile %s\n' "$HOME/known_hosts"
   declare -a envNames=()
   env >.env
@@ -22,8 +26,14 @@ function makeConfig {
       remoteVariableName=${project}Remote
       if [[ -n ${!remoteVariableName} ]]; then
         printf '  # Project %s\n' "$project"
-        printf '  #         %s:%s → localhost:%s\n' "$remoteHost" "${!remoteVariableName}" "$variableValue"
-        printf '  RemoteForward %s localhost:%s\n' "${!remoteVariableName}" "$variableValue"
+        host=localhost
+        port=$variableValue
+        if [[ $port =~ : ]]; then
+          host=$(cut --delimiter ":" --fields 1 <<<"$port")
+          port=$(cut --delimiter ":" --fields 2- <<<"$port")
+        fi
+        printf '  #         %s:%s → %s:%s\n' "$remoteHost" "${!remoteVariableName}" "$host" "$variableValue"
+        printf '  RemoteForward %s %s:%s\n' "${!remoteVariableName}" "$host" "$variableValue"
       fi
     fi
   done <.env
