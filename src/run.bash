@@ -39,4 +39,4 @@ fi
 # -x = Disables X11 forwarding.
 # -v = Verbose mode. Causes ssh to print debugging messages about its progress. This is helpful in debugging connection, authentication, and configuration problems.
 # -F = Specifies the path to an alternative per-user configuration file. If a configuration file is given on the command line, the system-wide configuration file (/etc/ssh/ssh_config) will be ignored.
-ssh -- -T -N -n -x -v -F ssh_config tunnel
+${sshCommand?}
